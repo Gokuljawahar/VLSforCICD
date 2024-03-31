@@ -1,0 +1,85 @@
+﻿@{ 
+    ViewData["Title"] = "Report";
+    ViewBag.AdminReportActive = "active";
+}
+
+       <table class="table table-hover table-dark" aria-label="Monthly and Yearly Report">
+          <thead>
+            <tr class="table-light">
+                <th colspan="2" class="text-center"><h5>@DateTime.Now.ToString("MMMM") Month Report</h5></th>
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monthly Granted Loan Amount</td>
+              <td>@TempData["MonthlyGivenOut"] INR</td>
+            </tr>
+            <tr>
+              <td>Monthly Active Loan</td>
+              <td>@TempData["MonthlyAciveLoan"]</td>
+            </tr>
+            <tr>
+              <td>Monthly Closed Loans</td>
+              <td>@TempData["MonthlyClosedLoan"]</td>
+            </tr>
+            <tr>
+              <td>Monthly Profit</td>
+              <td>@TempData["MonthlyProfit"] INR</td>
+            </tr>
+            <tr>
+              <td>Monthly Active Customers</td>
+              <td>@TempData["MonthlyActiveUsers"] User</td>
+            </tr>
+            <tr>
+              <td>Monthly Expected Payment to Paid</td>
+              <td>@TempData["MonthlyExpectedPayment"] INR</td>
+            </tr>
+            <tr>
+              <td>Monthly Total Amount Of Money Paid</td>
+              <td>@TempData["MonthlyPayedAmount"] INR</td>
+            </tr>
+            <tr>
+              <td>Monthly Total Amount Of Penalty Money</td>
+              <td>@TempData["MonthlyPayedPenalty"] INR</td>
+            </tr>
+
+            
+          </tbody>
+        </table>
+
+        <table class="table table-hover table-dark" aria-label=" Report">
+          <thead>
+            <tr class="table-light">
+                <th colspan="2" class="text-center"><h5>@DateTime.Now.Year Year Report</h5></th>
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr>
+              <td>Yearly Granted Loan Amount</td>
+              <td>@TempData["YearlyGivenOut"] INR</td>
+            </tr>
+            <tr>
+              <td>Yearly Active Loan</td>
+              <td>@TempData["YearlyActiveLoan"]</td>
+            </tr>
+            <tr>
+              <td>Yearly Closed Loans</td>
+              <td>@TempData["YearlyClosedLoan"]</td>
+            </tr>
+            <tr>
+              <td>Yearly Profit</td>
+              <td>@TempData["YearlyProfit"] INR</td>
+            </tr>
+            <tr>
+              <td>Yearly Active Customers</td>
+              <td>@TempData["YearlyUsers"] User</td>
+            </tr>
+            <tr>
+              <td>Yearly Total Amount Of Money Paid</td>
+              <td>@TempData["YearlyPayment"] INR</td>
+            </tr>
+          </tbody>
+        </table>
+

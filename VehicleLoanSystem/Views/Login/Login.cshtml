@@ -1,0 +1,55 @@
+﻿@model VehicleLoanSystem.Models.UserAccount
+
+@{
+    ViewData["Title"] = "Login";
+    ViewBag.LoginActive = "active text-dark";
+}
+
+<h1>Login</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">       
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="User_Name" class="control-label"></label>
+                <input asp-for="User_Name" class="form-control" />
+                <span asp-validation-for="User_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User_Password" class="control-label"></label>
+                <div class="input-group">
+                    <input type="password" asp-for="User_Password" class="form-control" id="passwordInput" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i class="far fa-eye" id="togglePassword"></i>
+                        </span>
+                    </div>
+                </div>
+                <span asp-validation-for="User_Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            var passwordInput = document.getElementById('passwordInput');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.classList.remove('far', 'fa-eye');
+                this.classList.add('fas', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                this.classList.remove('fas', 'fa-eye-slash');
+                this.classList.add('far', 'fa-eye');
+            }
+        });
+    </script>
+}

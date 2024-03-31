@@ -1,0 +1,202 @@
+﻿@model VehicleLoanSystem.Models.Loan
+
+@{
+    ViewData["Title"] = "Loan";
+    ViewBag.LoanActive = "active";
+}
+
+<h1>Request Loan</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RequestLoan" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select class="form-control" id="Gender" asp-for="Gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+    <label asp-for="Email" class="control-label"></label>
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+</div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" required pattern="[0-9]{10}" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+    <label asp-for="LoanPlanId" class="control-label"></label>
+    <select class="form-control" id="LoanPlanId" asp-for="LoanPlanId">
+        @if (ViewData["plan"] != null && ViewData["plan"].ToString().Length != 0)
+        {
+            foreach (LoanPlan item in ViewData["plan"] as List<LoanPlan>)
+            {
+                <option value="@item.Id">@item.Month Month, Interest of @item.Interest% with Penalty of @item.MonthlyOverDuePenalty%</option>
+            }
+        }
+        else
+        {
+            <option value="">Empty</option>
+        }
+    </select>
+</div>
+
+            
+            <div class="form-group">
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LoanTypeId" class="control-label"></label>
+                <select class="form-control" id="LoanTypeId" asp-for="LoanTypeId">
+                    @if (ViewData["type"] != null && ViewData["type"] is List<LoanType> loanTypes && loanTypes.Any())
+                    {
+                        foreach (var item in loanTypes)
+                        {
+                            <option value="@item.Id">@item.LoanTypeName</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">Empty</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LoanPurpose" class="control-label"></label>
+                <input asp-for="LoanPurpose" class="form-control" />
+                <span asp-validation-for="LoanPurpose" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LoanAmount" class="control-label"></label>
+                <input asp-for="LoanAmount" class="form-control" required min="50000" />
+                <span asp-validation-for="LoanAmount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="credit_score" class="control-label">Credit Score</label>
+                <select asp-for="credit_score" class="form-control">
+                    <option value="Below 580">Below 580</option>
+                    <option value="580 to 669">580 to 669</option>
+                    <option value="670 to 739">670 to 739</option>
+                    <option value="740 to 799">740 to 799</option>
+                    <option value="800">above 800</option>
+                </select>
+                <span asp-validation-for="credit_score" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label for="identityImageFile">Identity Proof Image</label>
+                <input type="file" id="identityImageFile" name="identityImageFile" accept="image/*" class="form-control-file" />
+                <small id="identityImageError" class="text-danger"></small>
+                <img id="identityImagePreview" src="#" alt="Identity Proof Preview" style="display: none; max-width: 200px; max-height: 200px;" />
+            </div>
+
+<div class="form-group">
+    <label for="incomeImageFile">Income Proof Image</label>
+    <input type="file" id="incomeImageFile" name="incomeImageFile" accept="image/*" class="form-control-file" />
+    <small id="incomeImageError" class="text-danger"></small>
+    <img id="incomeImagePreview" src="#" alt="Income Proof Preview" style="display: none; max-width: 200px; max-height: 200px;" />
+</div>
+ 
+  <div class="form-group">
+    <label for="cibilImageFile">CIBIL score proof Image</label>
+    <input type="file" id="cibilImageFile" name="cibilImageFile" accept="image/*" class="form-control-file" />
+    <small id="cibilImageError" class="text-danger"></small>
+    <img id="cibilImagePreview" src="#" alt="CIBIL Report Preview" style="display: none; max-width: 200px; max-height: 200px;" />
+</div>
+
+
+<script>
+    // Function to preview selected image
+    function previewImage(input, previewElement, errorElement) {
+        const file = input.files[0];
+        const preview = document.getElementById(previewElement);
+        const error = document.getElementById(errorElement);
+        
+        if (file) {
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                error.textContent = 'Only image files are allowed.';
+                input.value = ''; 
+                preview.style.display = 'none'; // Hide the preview
+                return;
+            }
+
+            // Validate file size if needed (you can adjust the maxFileSize value)
+            const maxFileSize = 5 * 1024 * 1024; // 5MB
+            if (file.size > maxFileSize) {
+                error.textContent = 'File size exceeds the limit (5MB).';
+                input.value = ''; // Clear the file input
+                preview.style.display = 'none'; // Hide the preview
+                return;
+            }
+
+            // Read and display the image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block'; // Show the preview
+                error.textContent = ''; // Clear any previous error messages
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // No file selected
+            preview.style.display = 'none'; // Hide the preview
+            error.textContent = ''; // Clear any previous error messages
+        }
+    }
+
+    // Add event listeners for file input changes
+    document.getElementById('identityImageFile').addEventListener('change', function() {
+        previewImage(this, 'identityImagePreview', 'identityImageError');
+    });
+
+    document.getElementById('incomeImageFile').addEventListener('change', function() {
+        previewImage(this, 'incomeImagePreview', 'incomeImageError');
+    });
+    document.getElementById('cibilImageFile').addEventListener('change', function() {
+    previewImage(this, 'cibilImagePreview', 'cibilImageError');
+});
+
+</script>
+
+            <div class="form-group">
+                <input type="submit" value="Request Loan" class="btn btn-primary" />
+                <a asp-action="ViewLoan" class="btn btn-danger">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

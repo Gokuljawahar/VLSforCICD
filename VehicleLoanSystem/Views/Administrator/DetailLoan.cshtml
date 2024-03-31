@@ -1,0 +1,183 @@
+﻿@model VehicleLoanSystem.Models.Loan
+
+@{
+    ViewData["Title"] = "Loan";
+    ViewBag.AdminLoanActive = "active";
+}
+
+<h1>Detail About Loan</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class ="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        @* <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </dt> *@
+        @* <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MiddleName)
+        </dd> *@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LoanPlanId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LoanPlanId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Salary) INR
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LoanTypeId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LoanTypeId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LoanPurpose)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LoanPurpose)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LoanAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LoanAmount) INR
+        </dd>
+        <dt class = "col-sm-2">
+            Loan Status
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LoanGrant)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LoanDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LoanDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalPayableAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalPayableAmount) INR
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MonthlyPayableAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MonthlyPayableAmount) INR 
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MonthlyPenalty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MonthlyPenalty) INR
+        </dd>
+         <dt class="col-sm-2">
+            Identity Image
+        </dt>
+        <dd class="col-sm-10">
+            <img  src="data:image;base64,@System.Convert.ToBase64String(Model.IdentityImage)" width="800px" height="600px" alt="Identity Image" />
+        </dd>
+        <!-- Add income image -->
+        <dt class="col-sm-2">
+            Income Image
+        </dt>
+        <dd class="col-sm-10">
+            <img  src="data:image;base64,@System.Convert.ToBase64String(Model.IncomeImage)" width="800px" height="600px" alt="Income Image" />
+        </dd>
+        <!-- Add cibil image -->
+        <dt class="col-sm-2">
+            CIBIL Image
+        </dt>
+        <dd class="col-sm-10">
+            <img  src="data:image;base64,@System.Convert.ToBase64String(Model.CibilImage)" width="800px" height="600px" alt="CIBIL Image" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RejectionReason)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RejectionReason)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+    </dl>
+</div>
+<div>
+    
+    <a class="btn btn-info" asp-action="Loan">Back to List</a>
+</div>
+
+<script>
+    function toggleImageSize(image) {
+        if (image.classList.contains('maximized')) {
+            image.classList.remove('maximized');
+        } else {
+            // Remove maximized class from all images
+            var allImages = document.getElementsByClassName('image-preview');
+            for (var i = 0; i < allImages.length; i++) {
+                allImages[i].classList.remove('maximized');
+            }
+            // Add maximized class to clicked image
+            image.classList.add('maximized');
+        }
+    }
+</script>
+
+<style>
+    .image-preview {
+        max-width: 200px;
+        max-height: 200px;
+        transition: max-width 0.3s ease, max-height 0.3s ease;
+        cursor: pointer;
+    }
+
+    .maximized {
+        max-width: none !important;
+        max-height: none !important;
+    }
+    .docimg:hover{
+        position:absolute;
+        top:10vh;
+        right:10vw;
+        width:800px;
+        height:800px;
+    }  
+</style>

@@ -1,0 +1,108 @@
+﻿@model IEnumerable<VehicleLoanSystem.Models.Payment>
+@using Microsoft.AspNetCore.Http;
+@using VehicleLoanSystem.Helpers;
+@{
+    ViewData["Title"] = "Payment";
+    ViewBag.PaymentActive = "active";
+}
+
+<h1>Payment</h1>
+
+<table class="table table-responsive table-striped table-hover w-100 border-0" aria-label="Payment History">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PayedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayedMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayedAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingLoanAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingMonthPayment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PenaltyPaymentAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NextPaymentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoanStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoanCovered)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            @if (item.UserId == Context.Session.GetInt32("userId"))
+            {
+
+                <tr>
+                    <td>
+                        @item.PayedDate.ToString("dddd mmmm-yyyy")
+                    </td>
+                    <td>
+                        @item.PayedMonth.ToString("MMMM")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayedAmount) INR
+                    </td>
+                    <td>
+                        
+
+                        @if(item.RemainingLoanAmount < 0){
+                            <p class="text-success">Paid</p>
+                        }else{
+                            <p>@Math.Round(item.RemainingLoanAmount,2) INR</p>
+                        }
+
+                    </td>
+                    <td>
+                       
+
+                         @if(item.RemainingMonthPayment < 0){
+                            <p class="">Monthly Payment Paid and Added @(-1*Math.Round(item.RemainingMonthPayment,2)) INR</p>
+
+                        }else{
+                            <p>@Math.Round(item.RemainingMonthPayment) INR</p>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PenaltyPaymentAmount) INR
+                    </td>
+                    <td>
+                        @item.NextPaymentDate.ToString("MMMM d")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoanStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoanCovered)
+                    </td>
+
+                </tr>
+
+            }
+
+
+        }
+
+        @if (Model.Count() == 0 || !Model.Any(e => e.UserId == Context.Session.GetInt32("userId")))
+        {
+            <tr>
+                <td class="w-50" colspan="9">Empty Database</td>
+            </tr>
+        }
+    </tbody>
+</table>
